@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies
 
 // Dependency Injection between interfaces, Repository
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Connected Database
 builder.Services.AddDbContext<DataContext>(options =>
