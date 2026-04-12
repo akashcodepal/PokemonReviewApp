@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PokemonReviewApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b068f36946fcc506dcb468527e81d1c242c8f4df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1052e70fc865cdcd3408aaab796d4609a55bf6dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("PokemonReviewApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PokemonReviewApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
+using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -11,7 +12,7 @@ namespace PokemonReviewApp.Controllers
   {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
-    
+
     public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
     {
       _categoryRepository = categoryRepository;
@@ -29,7 +30,7 @@ namespace PokemonReviewApp.Controllers
     [HttpGet("{id}")]
     public IActionResult GetCategory(int id)
     {
-      if(!_categoryRepository.CategoryExists(id))
+      if (!_categoryRepository.CategoryExists(id))
       {
         return NotFound();
       }
@@ -44,6 +45,36 @@ namespace PokemonReviewApp.Controllers
       var pokemon = _categoryRepository.GetPokemonsByCategory(categoryId);
       var mappedPokemons = _mapper.Map<List<PokemonDto>>(pokemon);
       return Ok(mappedPokemons);
+    }
+
+    [HttpPost]
+    public IActionResult CreateCategory([FromBody] CategoryDto categoryPayload)
+    {
+      if (categoryPayload == null)
+      {
+        return BadRequest(ModelState);
+      }
+      
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      if(_categoryRepository.CategoryExistsByName(categoryPayload.Name))
+      {
+        ModelState.AddModelError("", "Category Already Exists");
+        return StatusCode(422, ModelState);
+      }
+
+      var categoryMap = _mapper.Map<Category>(categoryPayload);
+
+      if (!_categoryRepository.CreateCategory(categoryMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+
+      return Ok("Successfully created.");
     }
   }
 }
