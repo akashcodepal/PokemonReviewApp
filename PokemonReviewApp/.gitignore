@@ -1,0 +1,64 @@
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Dependency folders
+node_modules/  # if using frontend tooling
+
+# Publish output
+publish/
+
+# Environment files
+.env
+
+# Azure / deployment artifacts
+*.azurePubxml
+*.pubxml.user
+
+# Test results
+TestResults/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# Generated files
+*.g.cs
+*.generated.cs
+
+# Local database files
+*.mdf
+*.ldf
+
+# Blazor / static web assets cache
+wwwroot/_framework/

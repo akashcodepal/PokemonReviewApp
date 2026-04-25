@@ -10,6 +10,8 @@ namespace PokemonReviewApp.Interfaces
         Pokemon GetPokemon(string name);
         decimal GetPokemonRating(int pokeId);
         bool PokemonExists(int pokeId);
-
+        bool PokemonExistsByName(string pokemonName);
+        bool CreatePokemon(Pokemon pokemon, int ownerId, int categoryId);
+        bool Save();
     }
 }
