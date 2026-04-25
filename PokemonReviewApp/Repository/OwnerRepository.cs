@@ -4,9 +4,9 @@ using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Repository
 {
-  public class OwnerRepository: IOwnerRepository
+  public class OwnerRepository : IOwnerRepository
   {
-    
+
     private readonly DataContext _context;
     public OwnerRepository(DataContext context)
     {
@@ -36,6 +36,22 @@ namespace PokemonReviewApp.Repository
     public ICollection<Pokemon> GetPokemonByOwner(int ownerId)
     {
       return _context.PokemonOwners.Where(po => po.OwnerId == ownerId).Select(p => p.Pokemon).ToList();
+    }
+
+    public bool CreateOwner(Owner owner)
+    {
+      _context.Add(owner);
+      return Save();
+    }
+
+    public bool Save()
+    {
+      return _context.SaveChanges() > 0 ? true : false;
+    }
+
+    public bool OwnerExistsByName(string ownerName)
+    {
+      return _context.Owners.Any(c => (c.FirstName + " " + c.LastName).Trim().ToUpper() == ownerName.Trim().ToUpper());
     }
   }
 }

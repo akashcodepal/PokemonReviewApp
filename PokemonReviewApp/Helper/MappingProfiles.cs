@@ -6,6 +6,8 @@ namespace PokemonReviewApp.Helper
 {
     public class MappingProfiles: Profile
     {
+        // Either Rever Map like Catergory & Country by writing directly
+        // OR We can use ReverseMap function.
         public MappingProfiles()
         {
             CreateMap<Pokemon, PokemonDto>();
@@ -14,7 +16,10 @@ namespace PokemonReviewApp.Helper
             CreateMap<CategoryDto, Category>();
 
             CreateMap<Country, CountryDto>();
-            CreateMap<Owner, OwnerDto>();
+            CreateMap<CountryDto, Country>();
+
+            CreateMap<Owner, OwnerDto>().ReverseMap();
+
             CreateMap<Review, ReviewDto>();
             CreateMap<Reviewer, ReviewerDto>();
         }

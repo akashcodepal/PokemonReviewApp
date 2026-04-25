@@ -9,5 +9,9 @@ namespace PokemonReviewApp.Interfaces
     Country GetCountryByOwner(int ownerId);
     ICollection<Owner> GetOwnersFromCountry(int countryId);
     bool CountryExists(int countryId);
+
+    bool CountryExistsByName(string name);
+    bool CreateCountry(Country country);
+    bool Save();
   }
 }

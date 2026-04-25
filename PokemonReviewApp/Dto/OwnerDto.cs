@@ -10,7 +10,8 @@ namespace PokemonReviewApp.Dto
 
     public string Gym { get; set; }
 
-    // A Owner can have 1 Country => one to one relationship
-    public Country Country { get; set; }
+    // Foreign Key
+    public int CountryId { get; set; }
+
   }
 }
