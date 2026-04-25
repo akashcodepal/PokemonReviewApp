@@ -6,5 +6,8 @@ namespace PokemonReviewApp.Dto
     public string Title { get; set; }
     public string Text { get; set; }
     public int Rating { get; set; }
+    // Foreign Keys
+    public int ReviewerId { get; set; }
+    public int PokemonId { get; set; }
   }
 }

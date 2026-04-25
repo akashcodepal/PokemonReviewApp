@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
+using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -46,6 +47,22 @@ namespace PokemonReviewApp.Controllers
       var mappedReviews = _mapper.Map<List<ReviewDto>>(reviews);
 
       return Ok(mappedReviews);
+    }
+
+    [HttpPost]
+    public IActionResult CreateReview(ReviewDto reviewPayload)
+    {
+      if(reviewPayload == null) return BadRequest();
+      if(!ModelState.IsValid) return BadRequest();
+
+      var reviewMap = _mapper.Map<Review>(reviewPayload);
+
+      if (!_reviewRepository.CreateReview(reviewMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+      return Ok("SuccessFully Created.");
     }
 
   }

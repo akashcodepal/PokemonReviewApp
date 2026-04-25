@@ -8,6 +8,10 @@
 
         public int Rating { get; set; }
 
+        // Foreign Keys
+        public int ReviewerId {get; set;}
+        public int PokemonId {get; set;}
+
         // A Review can be written by Single Reviewer => one to one relationship
         public Reviewer Reviewer { get; set; }
 
