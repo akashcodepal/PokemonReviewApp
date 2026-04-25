@@ -76,5 +76,40 @@ namespace PokemonReviewApp.Controllers
 
       return Ok("Successfully created.");
     }
+
+    [HttpPut]
+    public IActionResult UpdateCategory([FromBody] CategoryDto categoryPayload)
+    {
+      if (categoryPayload == null)
+      {
+        return BadRequest(ModelState);
+      }
+      
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      if(!_categoryRepository.CategoryExists(categoryPayload.Id))
+      {
+        return NotFound();
+      }
+
+      if(_categoryRepository.CategoryExistsByName(categoryPayload.Name))
+      {
+        ModelState.AddModelError("", "Category Already Exists");
+        return StatusCode(422, ModelState);
+      }
+
+      var categoryMap = _mapper.Map<Category>(categoryPayload);
+
+      if (!_categoryRepository.UpdateCategory(categoryMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+
+      return Ok("Successfully updated.");
+    }
   }
 }

@@ -57,6 +57,8 @@ namespace PokemonReviewApp.Controllers
 
       var reviewMap = _mapper.Map<Review>(reviewPayload);
 
+      // Verify if PokemonID and REviwer Id actually exists in Db.
+       
       if (!_reviewRepository.CreateReview(reviewMap))
       {
         ModelState.AddModelError("", "Something went wrong while Saving.");

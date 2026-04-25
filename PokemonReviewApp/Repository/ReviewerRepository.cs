@@ -12,6 +12,12 @@ namespace PokemonReviewApp.Repository
       _context = context;
     }
 
+    public bool CreateReviewer(Reviewer reviewer)
+    {
+      _context.Add(reviewer);
+      return Save();
+    }
+
     public Reviewer GetReviewer(int id)
     {
       return _context.Reviewers.Where(r => r.Id == id).FirstOrDefault();
@@ -30,6 +36,16 @@ namespace PokemonReviewApp.Repository
     public bool ReviewExists(int id)
     {
       return _context.Reviewers.Any(r => r.Id == id);
+    }
+
+    public bool ReviewExistsByName(string name)
+    {
+      return _context.Reviewers.Any(r => (r.FirstName+ " " + r.LastName).Trim().ToUpper() == name.Trim().ToUpper());
+    }
+
+    public bool Save()
+    {
+      return _context.SaveChanges() > 0 ? true: false;
     }
   }
 }

@@ -49,5 +49,11 @@ namespace PokemonReviewApp.Repository
       var savedChanges = _dataContext.SaveChanges();
       return savedChanges > 0 ? true : false;
     }
+
+    public bool UpdateCategory(Category category)
+    {
+      _dataContext.Update(category);
+      return Save();
+    }
   }
 }
