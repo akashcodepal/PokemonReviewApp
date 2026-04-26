@@ -106,5 +106,38 @@ namespace PokemonReviewApp.Controllers
 
         return Ok("SuccessFully Created.");
         }
+
+        [HttpPut]
+        public IActionResult UpdatePokemon([FromQuery] int ownerId, [FromQuery] int categoryId, [FromBody] PokemonDto pokemonPayload)
+        {
+            if(pokemonPayload == null) return BadRequest();
+            if(!ModelState.IsValid) return BadRequest();
+            if (!_pokemonRepository.PokemonExists(pokemonPayload.Id))
+            {
+                return NotFound();
+            }
+
+            if (!_ownerRepository.OwnerExists(ownerId))
+            {
+                ModelState.AddModelError("", "Owner does not exist");
+                return BadRequest(ModelState);
+            }
+
+            if (!_categoryRepository.CategoryExists(categoryId))
+            {
+                ModelState.AddModelError("", "Category does not exist");
+                return BadRequest(ModelState);
+            }
+
+            var pokemonMap = _mapper.Map<Pokemon>(pokemonPayload);
+
+            if (!_pokemonRepository.UpdatePokemon(pokemonMap, ownerId, categoryId))
+            {
+                ModelState.AddModelError("", "Something went wrong while Saving.");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("SuccessFully Updated.");
+        }
     }
 }

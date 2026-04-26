@@ -53,5 +53,11 @@ namespace PokemonReviewApp.Repository
     {
       return _context.Owners.Any(c => (c.FirstName + " " + c.LastName).Trim().ToUpper() == ownerName.Trim().ToUpper());
     }
+
+    public bool UpdateOwner(Owner owner)
+    {
+      _context.Update(owner);
+      return Save();
+    }
   }
 }

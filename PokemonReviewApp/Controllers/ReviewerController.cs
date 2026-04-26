@@ -70,5 +70,22 @@ namespace PokemonReviewApp.Controllers
 
       return Ok("SuccessFully Created.");
     }
+
+    [HttpPut]
+    public IActionResult UpdateReviewer(ReviewerDto reviewerPayload)
+    {
+      if(reviewerPayload == null) return BadRequest();
+      if(!ModelState.IsValid) return BadRequest();
+      if (!_reviewerRepository.ReviewExists(reviewerPayload.Id)) return NotFound();
+
+      var reviewerMap = _mapper.Map<Reviewer>(reviewerPayload);
+      if(!_reviewerRepository.UpdateReviewer(reviewerMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+
+      return Ok("SuccessFully Updated.");
+    }
   }
 }

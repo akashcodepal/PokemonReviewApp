@@ -67,5 +67,24 @@ namespace PokemonReviewApp.Controllers
       return Ok("SuccessFully Created.");
     }
 
+    [HttpPut]
+    public IActionResult UpdateReview(ReviewDto reviewPayload)
+    {
+      if(reviewPayload == null) return BadRequest();
+      if(!ModelState.IsValid) return BadRequest();
+      if (!_reviewRepository.ReviewExists(reviewPayload.id)) return NotFound();
+
+      var reviewMap = _mapper.Map<Review>(reviewPayload);
+
+      // Verify if PokemonID and REviwer Id actually exists in Db.
+       
+      if (!_reviewRepository.UpdateReview(reviewMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+      return Ok("SuccessFully Updated.");
+    }
+
   }
 }

@@ -87,5 +87,38 @@ namespace PokemonReviewApp.Controllers
 
       return Ok("SuccessFully Created.");
     }
+
+    [HttpPut]
+    public IActionResult UpdateOwner([FromBody] OwnerDto ownerPayload)
+    {
+      if(ownerPayload == null) return BadRequest();
+      if(!ModelState.IsValid) return BadRequest();
+      if (!_ownerRepository.OwnerExists(ownerPayload.Id)) return NotFound();
+
+      var ownerName = (ownerPayload.FirstName + " " + ownerPayload.LastName).Trim().ToUpper();
+      var owner = _ownerRepository.OwnerExistsByName(ownerName);
+
+      if (owner)
+      {
+        ModelState.AddModelError("", "Owner Already Exists");
+        return StatusCode(422, ModelState);
+      }
+
+      if (!_countryRepository.CountryExists(ownerPayload.CountryId))
+      {
+          ModelState.AddModelError("", "Country does not exist");
+          return BadRequest(ModelState);
+      }
+
+      var ownerMap = _mapper.Map<Owner>(ownerPayload);
+
+      if (!_ownerRepository.UpdateOwner(ownerMap))
+      {
+        ModelState.AddModelError("", "Something went wrong while Saving.");
+        return StatusCode(500, ModelState);
+      }
+
+      return Ok("SuccessFully Updated.");
+    }
   }
 }
